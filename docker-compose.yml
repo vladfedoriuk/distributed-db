@@ -1,0 +1,28 @@
+# https://citizix.com/how-to-run-mssql-server-2019-with-docker-and-docker-compose/
+# https://hub.docker.com/_/microsoft-mssql-server
+# https://stackoverflow.com/questions/69941444/how-to-have-docker-compose-init-a-sql-server-database
+version: '3.9'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - msqlserverdata:/var/lib/mssqlql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=msqlserver123!@
+    networks:
+      - msqlservernet
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1024k"
+        max-file: "5"
+
+networks:
+  msqlservernet:
+
+volumes:
+  msqlserverdata:
